@@ -1,0 +1,9 @@
+.form {
+    display: flex;
+    /* inputs should be 2rem on inputs according to spec, somewhat smaller on mobile */
+}
+
+.dmy {
+    display: flex;
+    flex-direction: column;
+}

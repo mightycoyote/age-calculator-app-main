@@ -6,7 +6,6 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <DatePicker />
-      {/* ornamental dividing line & arrow */}
       <DateDisplay />
     </main>
   )

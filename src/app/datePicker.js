@@ -5,13 +5,24 @@ import { useState } from "react";
 import styles from "./datePicker.module.css";
 
 function validateEntry(day, month, year) {
+  const enteredDate = new Date(year, month - 1, day);
+  const currentDate = new Date();
+  console.log(enteredDate);
 
+// validating entries like "April 31" is extremely difficult and may need a library added
+
+  if (currentDate - enteredDate < 0) {
+    console.log("date cannot be in the future")
+    return;
+  }
 };
 
 function DatePicker() {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+
+  const currentYear = new Date().getFullYear();
 
   return (
     <form onSubmit={event => {
@@ -26,7 +37,9 @@ function DatePicker() {
             size="4"
             placeholder="DD"
             required
-            // make these all regexes
+            type="number"
+            min="1"
+            max="31"
             value={day}
             onChange={(event) => {
               setDay(event.target.value);
@@ -40,6 +53,9 @@ function DatePicker() {
             size="4"
             placeholder="MM"
             required
+            type="number"
+            min="1"
+            max="12"
             value={month}
             onChange={(event) => {
               setMonth(event.target.value);
@@ -53,6 +69,9 @@ function DatePicker() {
             size="4"
             placeholder="YYYY"
             required
+            type="number"
+            min="1"
+            max={currentYear}
             value={year}
             onChange={(event) => {
               setYear(event.target.value);

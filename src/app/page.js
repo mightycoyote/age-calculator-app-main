@@ -1,12 +1,19 @@
-import styles from './page.module.css'
-import DatePicker from './datePicker';
-import DateDisplay from './dateDisplay';
+"use client";
+
+import { useState } from "react";
+import DatePicker from "./datePicker";
+import DateDisplay from "./dateDisplay";
+
+import styles from "./page.module.css";
 
 export default function Home() {
+
+  const [elapsed, setElapsed] = useState("");
+
   return (
     <main className={styles.main}>
-      <DatePicker />
+      <DatePicker elapsed={elapsed} setElapsed={setElapsed} />
       <DateDisplay />
     </main>
-  )
+  );
 }

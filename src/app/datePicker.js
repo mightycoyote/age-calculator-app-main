@@ -1,23 +1,19 @@
 "use client";
 
 import { useState } from "react";
+// import { DateTime, Interval } from "luxon";
 
+import validateEntry from "./validateEntry";
 import styles from "./datePicker.module.css";
 
-function validateEntry(day, month, year) {
-  const enteredDate = new Date(year, month - 1, day);
-  const currentDate = new Date();
-  console.log(enteredDate);
+// there are 3 kinds of form validation when submit is pressed:
+// 1. each has to be filled out
+// 2. each has to be within standard ranges (1-31 days, etc)
+// 3. finally, the date itself has to be valid - this produces the "whole form error". Only
+// one is shown, but I'll need to create a second one for "Date cannot be in the future." since
+// I can only check the current year above.
 
-// validating entries like "April 31" is extremely difficult and may need a library added
-
-  if (currentDate - enteredDate < 0) {
-    console.log("date cannot be in the future")
-    return;
-  }
-};
-
-function DatePicker() {
+function DatePicker({ elapsed, setElapsed }) {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
@@ -25,10 +21,12 @@ function DatePicker() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <form onSubmit={event => {
+    <form
+      onSubmit={(event) => {
         event.preventDefault();
         validateEntry(day, month, year);
-    }}>
+      }}
+    >
       <div className={styles.inputDiv}>
         <div className={styles.dmy}>
           <label htmlFor="day">Day</label>

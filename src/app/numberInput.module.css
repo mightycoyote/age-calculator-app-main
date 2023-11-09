@@ -1,0 +1,31 @@
+.numberInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.numberInput label {
+  text-transform: uppercase;
+}
+
+.inputBox {
+  border-radius: 5px;
+  font-size: 2rem;
+  border: 1px solid var(--lightgrey);
+}
+
+.inputBox:focus {
+    outline: 1px solid var(--purple);
+}
+
+/* 
+this prevents the empty boxes from being red on pageload, 
+as happens with :invalid, but is not implemented everywhere
+*/
+.inputBox:user-invalid {
+    border: 1px solid var(--lightred);
+}
+
+/* .inputBox:out-of-range {
+    border: 1px solid var(--lightred);
+} */
+

@@ -26,6 +26,20 @@ p, h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
+
+/* get rid of "spinner" buttons at right of number inputs */
+input::-webkit-inner-spin-button {
+  appearance: none;
+}
+input::-webkit-outer-spin-button {
+  appearance: none;
+  /* not sure if this is still needed */
+  /* margin: 0; */
+}
+input[type=number] {
+  appearance: textfield; /* Firefox */
+}
+
 :root {
   /* primary */
   --purple: hsl(259, 100%, 65%);

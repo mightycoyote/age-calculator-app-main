@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <DatePicker elapsed={elapsed} setElapsed={setElapsed} />
+      <DatePicker setElapsed={setElapsed} />
       <DateDisplay />
     </main>
   );

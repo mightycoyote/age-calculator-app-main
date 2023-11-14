@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./numberInput.module.css"
 
-function NumberInput( {id, otherTest, ...delegated} ) {
+function NumberInput( {id, otherTest, setPageError, ...delegated} ) {
   const [classes, setClasses] = useState(styles.inputBox);
   const [error, setError] = useState("ok");
   const currentYear = new Date().getFullYear();
@@ -30,6 +30,7 @@ function NumberInput( {id, otherTest, ...delegated} ) {
         onFocus={() => {
             setClasses(styles.inputBox);
             setError("ok");
+            setPageError("ok");
         }}
         {...delegated}
       />

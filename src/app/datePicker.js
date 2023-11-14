@@ -23,7 +23,7 @@ function DatePicker({ setElapsed }) {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        setPageError("ok");
+        // setPageError("ok");
         // this last validation step goes through Luxon, can return errors for invalid days or future in current year
         validateEntry(day, month, year, setPageError, setElapsed);
       }}
@@ -34,6 +34,7 @@ function DatePicker({ setElapsed }) {
           placeholder="DD"
           otherTest="event.target.value > 31 || event.target.value < 1"
           value={day}
+          setPageError={setPageError}
           onChange={(event) => {
             setDay(event.target.value);
           }}
@@ -43,6 +44,7 @@ function DatePicker({ setElapsed }) {
           placeholder="DD"
           otherTest="event.target.value > 12 || event.target.value < 1"
           value={month}
+          setPageError={setPageError}
           onChange={(event) => {
             setMonth(event.target.value);
           }}
@@ -52,6 +54,7 @@ function DatePicker({ setElapsed }) {
           placeholder="YYYY"
           otherTest="event.target.value > currentYear"
           value={year}
+          setPageError={setPageError}
           onChange={(event) => {
             setYear(event.target.value);
           }}

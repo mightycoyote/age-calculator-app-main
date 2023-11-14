@@ -4,7 +4,7 @@ import { useState } from "react";
 // import { DateTime, Interval } from "luxon";
 
 import NumberInput from "./numberInput";
-// import validateEntry from "./validateEntry";
+import validateEntry from "./validateEntry";
 import styles from "./datePicker.module.css";
 
 // there are 3 kinds of form validation when submit is pressed:
@@ -17,22 +17,21 @@ function DatePicker({ setElapsed }) {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-
-  const currentYear = new Date().getFullYear();
+  const [pageError, setPageError] = useState("ok");
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        setPageError("ok");
         // this last validation step goes through Luxon, can return errors for invalid days or future in current year
-        // validateEntry(day, month, year);
+        validateEntry(day, month, year, setPageError, setElapsed);
       }}
     >
       <div className={styles.inputDiv}>
         <NumberInput
           id="day"
           placeholder="DD"
-          // this doesn't get parsed
           otherTest="event.target.value > 31 || event.target.value < 1"
           value={day}
           onChange={(event) => {
@@ -42,7 +41,7 @@ function DatePicker({ setElapsed }) {
         <NumberInput
           id="month"
           placeholder="DD"
-          max="12"
+          otherTest="event.target.value > 12 || event.target.value < 1"
           value={month}
           onChange={(event) => {
             setMonth(event.target.value);
@@ -51,13 +50,15 @@ function DatePicker({ setElapsed }) {
         <NumberInput
           id="year"
           placeholder="YYYY"
-          max={currentYear}
+          otherTest="event.target.value > currentYear"
           value={year}
           onChange={(event) => {
             setYear(event.target.value);
           }}
         />
       </div>
+      {(pageError === "invalidDate") && <div>Must be a valid date</div>}
+      {(pageError === "inFuture") && <div>Must not be in the future</div>}
       <button>fancy arrow button</button>
     </form>
   );

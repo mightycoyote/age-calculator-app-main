@@ -4,6 +4,7 @@ import styles from "./numberInput.module.css"
 function NumberInput( {id, otherTest, ...delegated} ) {
   const [classes, setClasses] = useState(styles.inputBox);
   const [error, setError] = useState("ok");
+  const currentYear = new Date().getFullYear();
 
   return (
     <div className={styles.numberInput}>
@@ -20,7 +21,7 @@ function NumberInput( {id, otherTest, ...delegated} ) {
             setError("missingField");
             return;
           }
-          if (otherTest) {
+          if (eval(otherTest)) {
             setClasses(`${styles.inputBox} ${styles.error}`);
             setError("outOfRange");
             return;
@@ -33,7 +34,8 @@ function NumberInput( {id, otherTest, ...delegated} ) {
         {...delegated}
       />
         {(error === "missingField") && <div>This field is required</div>}
-        {(error === "outOfRange") && <div>Must be a valid {id}</div>}
+        {(error === "outOfRange" && id !== "year") && <div>Must be a valid {id}</div>}
+        {(error === "outOfRange" && id === "year") && <div>Must be in the past</div>}
 
     </div>
   );

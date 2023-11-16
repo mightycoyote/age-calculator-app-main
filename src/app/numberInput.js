@@ -1,14 +1,19 @@
 import { useState } from "react";
-import styles from "./numberInput.module.css"
+import styles from "./numberInput.module.css";
 
-function NumberInput( {id, otherTest, setPageError, ...delegated} ) {
-  const [classes, setClasses] = useState(styles.numberInput);
-  const [error, setError] = useState("ok");
+function NumberInput({ id, otherTest, setPageError, ...delegated }) {
+
+  const [error, setError] = useState({
+    status: "ok",
+    classes: `${styles.numberInput}`,
+  });
+
   // this _is_ used by otherTest when checking year
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className={classes}>
+    // should be numberInput class
+    <div className={error.classes}>
       <label htmlFor={id}>{id}</label>
       <input
         className={styles.inputBox}
@@ -18,27 +23,38 @@ function NumberInput( {id, otherTest, setPageError, ...delegated} ) {
         type="number"
         onBlur={(event) => {
           if (event.target.value === "") {
-            setClasses(`${styles.numberInput} ${styles.error}`);
-            setError("missingField");
+            setError({
+              status: "missingField",
+              classes: `${styles.numberInput} ${styles.error}`,
+            });
             return;
           }
           if (eval(otherTest)) {
-            setClasses(`${styles.numberInput} ${styles.error}`);
-            setError("outOfRange");
+            setError({
+              status: "outOfRange",
+              classes: `${styles.numberInput} ${styles.error}`,
+            });
             return;
           }
         }}
         onFocus={() => {
-            setClasses(styles.numberInput);
-            setError("ok");
-            setPageError("ok");
+          setError({
+            status: "ok",
+            classes: `${styles.numberInput}`,
+          });
+          setPageError("ok");
         }}
         {...delegated}
       />
-        {(error === "missingField") && <div className={styles.errorMessage}>This field is required</div>}
-        {(error === "outOfRange" && id !== "year") && <div className={styles.errorMessage}>Must be a valid {id}</div>}
-        {(error === "outOfRange" && id === "year") && <div className={styles.errorMessage}>Must be in the past</div>}
-
+      {error.status === "missingField" && (
+        <div className={styles.errorMessage}>This field is required</div>
+      )}
+      {error.status === "outOfRange" && id !== "year" && (
+        <div className={styles.errorMessage}>Must be a valid {id}</div>
+      )}
+      {error.status === "outOfRange" && id === "year" && (
+        <div className={styles.errorMessage}>Must be in the past</div>
+      )}
     </div>
   );
 }

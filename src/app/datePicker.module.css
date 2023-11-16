@@ -2,5 +2,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2rem;
-  /* inputs should be 2rem on inputs according to spec, somewhat smaller on mobile */
+}
+
+.errorMessage {
+  color: var(--lightred);
+  font-weight: 400;
+  font-style: italic;
+  font-size: var(--small-font);
 }

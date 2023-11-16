@@ -17,6 +17,7 @@ function DatePicker({ setElapsed }) {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
+  // threading setPageError through to inputs allow them to clear the Luxon page error on focus as it does for the onBlur errors
   const [pageError, setPageError] = useState("ok");
 
   return (
@@ -60,8 +61,8 @@ function DatePicker({ setElapsed }) {
           }}
         />
       </div>
-      {(pageError === "invalidDate") && <div>Must be a valid date</div>}
-      {(pageError === "inFuture") && <div>Must not be in the future</div>}
+      {(pageError === "invalidDate") && <div className={styles.errorMessage}>Must be a valid date</div>}
+      {(pageError === "inFuture") && <div className={styles.errorMessage}>Must not be in the future</div>}
       <button>fancy arrow button</button>
     </form>
   );

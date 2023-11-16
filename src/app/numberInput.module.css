@@ -1,22 +1,51 @@
+/* inputs should be 2rem on inputs according to spec, somewhat smaller on mobile */
+
 .numberInput {
   display: flex;
   flex-direction: column;
+  font-weight: 700;
 }
 
 .numberInput label {
   text-transform: uppercase;
+  color: var(--smokeygrey);
+  letter-spacing: 4px;
+  font-size: var(--small-font);
 }
 
 .inputBox {
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 2rem;
   border: 1px solid var(--lightgrey);
-}
-
-.error {
-  border: 1px solid var(--lightred);
+  color: var(--offblack);
+  height: 4rem;
+  padding: 1.2rem;
+  margin: .5rem 0;
 }
 
 .inputBox:focus {
   outline: 1px solid var(--purple);
 }
+
+.inputBox::placeholder {
+  color: inherit;
+}
+
+/* error styles */
+
+.errorMessage {
+  color: var(--lightred);
+  font-weight: 400;
+  font-style: italic;
+  font-size: var(--small-font);
+}
+
+.numberInput.error label {
+  color: var(--lightred);
+}
+
+.error > .inputBox {
+   border: 1px solid var(--lightred);
+}
+
+

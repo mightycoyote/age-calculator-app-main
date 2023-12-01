@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { PageErrorContext } from "./datePicker";
 import styles from "./numberInput.module.css";
 
-function NumberInput({ id, otherTest, setPageError, ...delegated }) {
+function NumberInput({ id, otherTest, ...delegated }) {
+  // need to figure out how to make a change in pageError state also change to the error styles without breaking everything
+  const { pageError, setPageError } = useContext(PageErrorContext);
+  const [status, setStatus] = useState("ok");
+  const [classes, setClasses] = useState(`${styles.numberInput}`);
 
-  const [error, setError] = useState({
-    status: "ok",
-    classes: `${styles.numberInput}`,
-  });
 
   // this _is_ used by otherTest when checking year
   const currentYear = new Date().getFullYear();
 
   return (
     // should be numberInput class
-    <div className={error.classes}>
+    <div className={classes}>
       <label htmlFor={id}>{id}</label>
       <input
         className={styles.inputBox}
@@ -23,40 +24,45 @@ function NumberInput({ id, otherTest, setPageError, ...delegated }) {
         type="number"
         onBlur={(event) => {
           if (event.target.value === "") {
-            setError({
-              status: "missingField",
-              classes: `${styles.numberInput} ${styles.error}`,
-            });
+            setStatus("missingField",);
+            setClasses(`${styles.numberInput} ${styles.error}`)
             return;
           }
           if (eval(otherTest)) {
-            setError({
-              status: "outOfRange",
-              classes: `${styles.numberInput} ${styles.error}`,
-            });
+            setStatus("outOfRange",);
+            setClasses(`${styles.numberInput} ${styles.error}`)
             return;
           }
         }}
         onFocus={() => {
-          setError({
-            status: "ok",
-            classes: `${styles.numberInput}`,
-          });
+          setStatus("ok");
+          setClasses(`${styles.numberInput}`);
           setPageError("ok");
         }}
         {...delegated}
       />
-      {error.status === "missingField" && (
+      {status === "missingField" && (
         <div className={styles.errorMessage}>This field is required</div>
       )}
-      {error.status === "outOfRange" && id !== "year" && (
+      {status === "outOfRange" && id !== "year" && (
         <div className={styles.errorMessage}>Must be a valid {id}</div>
       )}
-      {error.status === "outOfRange" && id === "year" && (
+      {status === "outOfRange" && id === "year" && (
         <div className={styles.errorMessage}>Must be in the past</div>
       )}
     </div>
   );
 }
+
+// function determineClasses(status, pageError) {
+//   let classes;
+//   if (status === "ok" && pageError === "ok") {
+//     classes = `${styles.numberInput}`;
+//   }
+//   else {
+//     classes = `${styles.numberInput} ${styles.error}`;
+//   }
+//   return classes;
+// }
 
 export default NumberInput;
